@@ -5,18 +5,7 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/barcodetest/CameraSelectorDialogFragment.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/barcodetest/FormatSelectorDialogFragment.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/barcodetest/FullScannerActivity.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/barcodetest/FullScannerFragment.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/barcodetest/FullScannerFragmentActivity.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/barcodetest/FullScreenScannerFragmentActivity.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/barcodetest/MessageDialogFragment.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/barcodetest/SimpleScannerActivity.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/barcodetest/SimpleScannerFragment.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/barcodetest/SimpleScannerFragmentActivity.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_full_scanner.xml" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_full_scanner_fragment.xml" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_full_screen_scanner_fragment.xml" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_simple_scanner.xml" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_simple_scanner_fragment.xml" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/values/ids.xml" charset="windows-1252" />
     <file url="PROJECT" charset="UTF-8" />
   </component>

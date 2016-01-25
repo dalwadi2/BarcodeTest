@@ -5,24 +5,33 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LocationListener {
     private static final int ZXING_CAMERA_PERMISSION = 1;
+    private static final String TAG = "harsh";
     private Class<?> mClss;
     TextView myresult;
     EditText getdata;
-    Button generate;
+    Button generate, geo;
     String data;
+    protected LocationManager locationManager;
+    protected double latitude;
+    protected double longitude;
 
     @Override
     public void onCreate(Bundle state) {
@@ -33,8 +42,17 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences mypref = getSharedPreferences("MyCodeSettings", Context.MODE_PRIVATE);
         final SharedPreferences.Editor myedit = mypref.edit();
+        geo = (Button) findViewById(R.id.geoc);
         generate = (Button) findViewById(R.id.senddata);
         getdata = (EditText) findViewById(R.id.gettext);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        geo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getmap();
+            }
+        });
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +70,50 @@ public class MainActivity extends AppCompatActivity {
                         mypref.getString("format", "Null")
         );
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+
+    }
+
+    public void locationdirectwithmap() {
+
+        Uri gmmIntentUri = Uri.parse("google.navigation:q=23.081420, 72.560493&mode=d");
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        try {
+            startActivity(mapIntent);
+        } catch (Exception e) {
+            locationdirectwithchrome();
+        }
+    }
+
+    public void locationdirectwithchrome() {
+
+        Uri gmmIntentUri = Uri.parse("http://maps.google.com/maps?saddr=" + latitude + "," + longitude + "&daddr=23.081420, 72.560493");
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        startActivity(Intent.createChooser(mapIntent, "Select App"));
+//        startActivity(mapIntent);
+    }
+
+
+    public void getmap() {
+        Log.e(TAG, "onLocationChanged: lat: " + latitude + ", Longitude:" + longitude);
+        locationdirectwithmap();
+    }
+
 
     public void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -90,5 +152,26 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return;
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        Log.d(TAG, "disable");
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        Log.d(TAG, "enable");
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        Log.d(TAG, "status");
     }
 }

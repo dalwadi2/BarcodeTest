@@ -44,5 +44,12 @@
             android:text="Generate"
             android:id="@+id/senddata" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GEO"
+            android:id="@+id/geoc"
+            android:layout_gravity="center_horizontal" />
+
     </LinearLayout>
 </LinearLayout>
