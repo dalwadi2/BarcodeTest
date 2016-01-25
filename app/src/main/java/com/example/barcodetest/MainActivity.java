@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     protected LocationManager locationManager;
     protected double latitude;
     protected double longitude;
+    int i = 0;
 
     @Override
     public void onCreate(Bundle state) {
@@ -46,7 +47,21 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         generate = (Button) findViewById(R.id.senddata);
         getdata = (EditText) findViewById(R.id.gettext);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
+        if (i > 1) {
+            getmap();
+        }
         geo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,22 +86,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         );
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-
-    }
 
     public void locationdirectwithmap() {
 
@@ -110,8 +109,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
 
     public void getmap() {
+        i++;
         Log.e(TAG, "onLocationChanged: lat: " + latitude + ", Longitude:" + longitude);
-        locationdirectwithmap();
+        if ((latitude == 0.0 || longitude == 0.0)) {
+            Toast.makeText(MainActivity.this, "Keep Your GPS Enable !! ", Toast.LENGTH_LONG).show();
+        } else
+            locationdirectwithmap();
     }
 
 
